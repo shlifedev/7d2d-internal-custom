@@ -58,7 +58,7 @@ namespace SharpMonoInjector.Console
             {
                 try
                 {
-                    System.Console.WriteLine("-인젝트 테스트-");
+                    System.Console.WriteLine("-7d2d injector v0001 -");
                     System.Console.WriteLine("숫자1 입력 : 인젝트");
                     System.Console.WriteLine("숫자2 입력 : 이젝트");
                     System.Console.WriteLine("숫자3 입력 : img 테스트");
@@ -66,6 +66,7 @@ namespace SharpMonoInjector.Console
                     var injector = new Injector("7DaysToDie"); 
                     if (id == 1)
                     {
+                        System.Console.WriteLine(("do process injecting.."));
                         var _fakeargs = @"inject -p 7DaysToDie -a ExampleAssembly.dll -n ExampleAssembly -c Loader -m Load";
                         CommandLineArguments args = new CommandLineArguments(_fakeargs.Split(' '));
                         address = Inject(injector, args); 
@@ -83,7 +84,7 @@ namespace SharpMonoInjector.Console
                         while (true)
                         {
                             injector = new Injector("7DaysToDie");
-                            var _fakeargs = @"inject -p 7DaysToDie -a 7d2dMonoInternal-main\obj\Debug\ExampleAssembly.dll -n ExampleAssembly -c Loader -m Load";
+                            var _fakeargs = @"inject -p 7DaysToDie -a ExampleAssembly.dll -n ExampleAssembly -c Loader -m Load";
                             CommandLineArguments args = new CommandLineArguments(_fakeargs.Split(' '));
                             var idx = Inject(injector, args);
                             if (idx != IntPtr.Zero)
@@ -98,9 +99,9 @@ namespace SharpMonoInjector.Console
 
                     System.Console.WriteLine("process complete!!");  
                 }
-                catch
+                catch(Exception e)
                 {
-
+                    System.Console.WriteLine(e);
                 }
             }
         }
