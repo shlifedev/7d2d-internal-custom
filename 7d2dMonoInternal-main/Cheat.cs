@@ -159,7 +159,7 @@ namespace ExampleAssembly
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.O))
+            if (Input.GetKeyDown(KeyCode.Home))
             {
                 if (!O.localPlayer)
                 {
@@ -194,7 +194,7 @@ namespace ExampleAssembly
                 Loader.config.Speed = true;
                 Time.timeScale = Loader.config.Speed ? 6f : 1f;
             }
-            if (Input.GetKeyDown(KeyCode.Mouse3))
+            if (Input.GetKeyUp(KeyCode.Mouse3))
             {
                 Loader.config.Speed = false;
                 Time.timeScale = Loader.config.Speed ? 6f : 1f;

@@ -66,7 +66,7 @@ namespace SharpMonoInjector.Console
                     var injector = new Injector("7DaysToDie"); 
                     if (id == 1)
                     {
-                        var _fakeargs = @"inject -p 7DaysToDie -a 7d2dMonoInternal-main\obj\Debug\ExampleAssembly.dll -n ExampleAssembly -c Loader -m Load";
+                        var _fakeargs = @"inject -p 7DaysToDie -a ExampleAssembly.dll -n ExampleAssembly -c Loader -m Load";
                         CommandLineArguments args = new CommandLineArguments(_fakeargs.Split(' '));
                         address = Inject(injector, args); 
                     }
