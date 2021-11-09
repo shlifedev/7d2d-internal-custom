@@ -306,6 +306,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cheat.cs" />
+    <Compile Include="Cheats\Aimbot.cs" />
+    <Compile Include="Cheats\MagicBullet.cs" />
+    <Compile Include="Config.cs" />
     <Compile Include="ESP.cs" />
     <Compile Include="ESPUtils.cs" />
     <Compile Include="Loader.cs" />

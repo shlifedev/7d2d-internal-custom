@@ -67,8 +67,26 @@ namespace ExampleAssembly {
                 ESPUtils.DrawLine(lineVerticalStart, lineVerticalEnd, crosshairCol, lineThickness);
             }
 
+            if (O.chunkList.Count >0 )
+            { 
+                foreach (var chunkGo in O.chunkList)
+                {
+                    if (chunkGo != null)
+                    {
+                        var col = chunkGo.GetComponentInChildren<Collider>();
+                        var chunk = chunkGo.chunk;
+                        if (chunk != null)
+                        { 
+                            var chunkPos = col.transform.position;
+                            
+                            Vector3 w2s = mainCam.WorldToScreenPoint(chunkPos);
+                            ESPUtils.DrawCircle(Color.yellow, w2s, 3); 
+                        }
+                    }
+                }
+            }
             if (O.zombieList.Count > 0 && (zombieName || zombieBox || zombieHealth)) {
-                foreach (EntityZombie zombie in O.zombieList) {
+                foreach (EntityEnemy zombie in O.zombieList) {
                     if (!zombie || !zombie.IsAlive()) {
                         continue;
                     }

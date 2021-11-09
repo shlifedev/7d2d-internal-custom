@@ -11,7 +11,7 @@ namespace ExampleAssembly {
         
         private float lastCachePlayer;
         private float lastCacheZombies;
-        private float lastCacheItems;
+        private float lastCacheChunks;
 
         public static List<EntityPlayer> PlayerList {
             get {
@@ -23,18 +23,18 @@ namespace ExampleAssembly {
         }
 
         public static EntityPlayerLocal localPlayer;
-        public static List<EntityZombie> zombieList;
-        public static List<Entity> itemList;  
+        public static List<EntityEnemy> zombieList;
+        public static List<ChunkGameObject> chunkList;  
 
         private void Start() {
-            zombieList = new List<EntityZombie>();
-            itemList = new List<Entity>();
-
+            zombieList = new List<EntityEnemy>();
+            chunkList = new List<ChunkGameObject>(); 
             lastCachePlayer = Time.time + 5f;
             lastCacheZombies = Time.time + 3f;
-            lastCacheItems = Time.time + 4f;
+            lastCacheChunks = Time.time + 4f;
         }
 
+   
         private void Update() {
             /* 
              * Only a little bit of spaghetti : ^)
@@ -48,11 +48,11 @@ namespace ExampleAssembly {
 
                 lastCachePlayer = Time.time + 5f;
             } else if (Time.time >= lastCacheZombies) {
-                zombieList = FindObjectsOfType<EntityZombie>().ToList(); 
+                zombieList = FindObjectsOfType<EntityEnemy>().ToList(); 
                 lastCacheZombies = Time.time + 3f;
-            } else if (Time.time >= lastCacheItems) {
-                itemList = FindObjectsOfType<Entity>().ToList(); 
-                lastCacheItems = Time.time + 4f;
+            } else if (Time.time >= lastCacheChunks) {
+                chunkList = FindObjectsOfType<ChunkGameObject>().ToList(); 
+                lastCacheChunks = Time.time + 4f;
             }
              
         }

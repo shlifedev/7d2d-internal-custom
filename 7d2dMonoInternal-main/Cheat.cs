@@ -38,7 +38,7 @@ namespace ExampleAssembly
         }
 
         public static float smooth = 2;
-        private EntityZombie test;
+        private EntityEnemy test;
         private void Aimbot()
         {
             if(O.zombieList == null) return;
@@ -46,8 +46,8 @@ namespace ExampleAssembly
             // This aimbot is pasted, if you wrote this let me know and I'll credit you.
             float minDist = float.MaxValue;
             Vector2 target = Vector2.zero;
-            EntityZombie targetObj = null;
-            foreach (EntityZombie enemy in O.zombieList)
+            EntityEnemy targetObj = null;
+            foreach (EntityEnemy enemy in O.zombieList)
             {
                 if (enemy != null && enemy.emodel != null)
                 {
@@ -83,14 +83,15 @@ namespace ExampleAssembly
             }
         }
 
- 
+  
+         
 
         private void MagicBullet()
         {
-            EntityZombie ztarget = null;
+            EntityEnemy ztarget = null;
             EntityPlayer pTarget = null;
 
-            foreach (EntityZombie zombie in O.zombieList)
+            foreach (EntityEnemy zombie in O.zombieList)
                 if (zombie && zombie.IsAlive())
                 {
                     Vector3 head = zombie.emodel.GetHeadTransform().position;
@@ -146,6 +147,7 @@ namespace ExampleAssembly
                 return;
             }*/
 
+            
             if (Loader.config.NoWeaponBob && O.localPlayer)
             {
                 vp_FPWeapon weapon = O.localPlayer.vp_FPWeapon;
@@ -183,12 +185,70 @@ namespace ExampleAssembly
             {
                 MagicBullet();
             }
-
-            if (Input.GetKey(KeyCode.E) && O.zombieList.Count > 0 && Loader.config.Aimbot)
+             
+            if (Input.GetKey(KeyCode.Mouse4) && O.zombieList.Count > 0 && Loader.config.Aimbot)
             {
                 Aimbot();
             }
 
+            if(Input.GetKeyUp(KeyCode.Mouse0)){
+                if (O.localPlayer != null)
+                {
+                    var chgos = FindObjectsOfType<ChunkGameObject>();
+                    Log.Out("chunkGameObjects Count : " + chgos.Length);
+                     
+                    /////
+                    Ray ray = new Ray(O.localPlayer.playerCamera.transform.position,
+                        O.localPlayer.playerCamera.transform.forward);
+                    RaycastHit hit;
+                    if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+                    {
+                        
+                        if (hit.collider != null)
+                        {
+                            Log.Out("hit => " + hit.collider.name +$" ({hit.collider.tag})");
+                            var monos = hit.collider.GetComponents<MonoBehaviour>();
+                            var monos2 = hit.collider.GetComponentsInChildren<MonoBehaviour>();
+                            var monos3 = hit.collider.GetComponentsInParent<MonoBehaviour>();
+
+                            foreach (var moni in monos)
+                            {
+                                Log.Out("this => " + moni.GetType().Name + $", ({moni.tag})");
+                            }
+
+                            foreach (var moni in monos2)
+                            {
+                                Log.Out("child => " + moni.GetType().Name + $", ({moni.tag})");
+                            }
+
+                            foreach (var moni in monos3)
+                            {
+                                Log.Out("parent => " + moni.GetType().Name + $", ({moni.tag})");
+                                if (moni is ChunkGameObject)
+                                {
+                                 
+                                    var cgo = moni as ChunkGameObject;
+                                    Log.Out("go pos => " + moni.transform.position);
+                                    Log.Out("go 2pos => " + moni.transform.localPosition);
+                                    Log.Out("hit col pos => " + hit.collider.transform.position);
+                                    Log.Out("world Pos => " + cgo.chunk.GetWorldPos());
+                                    Log.Out("chunk Pos => " + cgo.chunk.ChunkPos);
+                                    Log.Out("has Entities => " + cgo.chunk.hasEntities);
+                                    Log.Out("xyz chunk Pos => " + cgo.chunk.X +"," + cgo.chunk.Y +"," + cgo.chunk.Z);
+                                    
+                                    var block = cgo.chunk.GetBlock(cgo.chunk.ChunkPos);
+                                    Log.Out($"block value Pos => {block.parent}");
+                                    var t = cgo.chunk.GetBlockEntity(moni.transform); 
+                                    Log.Out(t.pos.ToVector3().ToString());
+                                }
+                            }
+                        }
+                    }
+
+                }
+
+
+            }
             if (Input.GetKeyDown(KeyCode.Mouse3))
             {
                 Loader.config.Speed = true;
